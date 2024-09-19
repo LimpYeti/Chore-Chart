@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+</head>
+<body>
+    <iframe srcdoc="
+    <!DOCTYPE html>
+    <html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Wednesday's Chores</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            h2 {
+                text-align: center;
+                color: #333;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+            }
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                background-color: #f8f8f8;
+                position: relative;
+            }
+            select {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .not_done {
+                color: red;
+            }
+            .in_progress {
+                color: orange;
+            }
+            .done {
+                color: green;
+            }
+            button {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                padding: 5px 10px;
+                font-size: 14px;
+                background-color: #ddd;
+                color: #333;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #ccc;
+            }
+        </style>
+        <script>
+            function updateColor(selectElement) {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                selectElement.style.color = selectedOption.style.color;
+            }
+
+            function resetStatuses() {
+                const selects = document.querySelectorAll('select');
+                selects.forEach(select => {
+                    select.value = 'not_done';
+                    updateColor(select);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <h2>Wednesday's Chores</h2>
+        <table>
+            <tr>
+                <th>Chore</th>
+                <th>Status
+                    <button onclick='resetStatuses()'>Reset</button>
+                </th>
+            </tr>
+            <tbody id='choreTable'>
+                <!-- Chores will be added here -->
+            </tbody>
+        </table>
+        <script>
+            const chores = [
+                { name: 'Laundry Room - Dust', status: 'not_done' },
+                { name: 'Laundry Room - Sweep', status: 'not_done' },
+                { name: 'Laundry Room - Mop', status: 'not_done' },
+                { name: 'Entry Way - Dust', status: 'not_done' },
+                { name: 'Entry Way - Sweep', status: 'not_done' },
+                { name: 'Entry Way - Mop', status: 'not_done' }
+            ];
+
+            const choreTable = document.getElementById('choreTable');
+
+            chores.forEach(chore => {
+                const row = document.createElement('tr');
+                const choreCell = document.createElement('td');
+                choreCell.textContent = chore.name;
+                const statusCell = document.createElement('td');
+                const select = document.createElement('select');
+                select.innerHTML = `
+                    <option value='not_done' class='not_done' style='color: red;' ${chore.status === 'not_done' ? 'selected' : ''}>Not Done</option>
+                    <option value='in_progress' class='in_progress' style='color: orange;' ${chore.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                    <option value='done' class='done' style='color: green;' ${chore.status === 'done' ? 'selected' : ''}>Done</option>
+                `;
+                select.className = chore.status;
+                select.onchange = function() {
+                    updateColor(this);
+                };
+                updateColor(select); // Set initial color
+                statusCell.appendChild(select);
+                row.appendChild(choreCell);
+                row.appendChild(statusCell);
+                choreTable.appendChild(row);
+            });
+        </script>
+    </body>
+    </html>
+    " width="100%" height="500px"></iframe>
+</body>
+</html>
